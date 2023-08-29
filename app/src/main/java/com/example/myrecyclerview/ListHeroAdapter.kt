@@ -5,11 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myrecyclerview.Hero
 import com.example.myrecyclerview.R
 
 class ListHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adapter<ListHeroAdapter.ListViewHolder>() {
+
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -26,8 +28,12 @@ class ListHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
         holder.imgPhoto.setImageResource(photo)
         holder.tvName.text = name
         holder.tvDescription.text = description
+        holder.itemView.setOnClickListener {
+            Toast.makeText(holder.itemView.context, "Kamu memilih " + listHero[holder.adapterPosition].name, Toast.LENGTH_SHORT).show()
+        }
         holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listHero[holder.adapterPosition]) }
     }
+
 
     override fun getItemCount(): Int = listHero.size
 
@@ -40,4 +46,5 @@ class ListHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
     interface OnItemClickCallback {
         fun onItemClicked(data: Hero)
     }
+
 }
